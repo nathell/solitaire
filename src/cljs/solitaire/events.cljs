@@ -10,6 +10,13 @@
             db/default-db))
 
 (rf/reg-event-db
+ ::start
+ (fn [db _]
+   (assoc db
+          :board db/initial-board
+          :status :in-progress)))
+
+(rf/reg-event-db
  ::select-field
  (fn [db [_ x y]]
    (assoc db :selected-field
@@ -23,7 +30,11 @@
    (let [source (:selected-field db)
          target [x y]]
      (if (db/can-move? board source target)
-       (-> db
-           (assoc :board (db/move board source target))
-           (assoc :selected-field nil))
+       (let [new-board (db/move board source target)]
+         (assoc db
+                :board new-board
+                :selected-field nil
+                :status (if (db/game-over? new-board)
+                          :not-started
+                          :in-progress)))
        (assoc db :selected-field nil)))))

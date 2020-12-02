@@ -1,6 +1,6 @@
 (ns solitaire.db)
 
-(def initial-board
+(def initial-layout
   '[[. . o o o . .]
     [. . o o o . .]
     [o o o o o o o]
@@ -12,8 +12,10 @@
 (defn parse-board [board]
   (mapv (partial mapv {'. :blocked, 'o :peg, '_ :empty}) board))
 
+(def initial-board (parse-board initial-layout))
+
 (def default-db
-  {:state :not-started, :board (parse-board initial-board)})
+  {:status :not-started, :board initial-board})
 
 (defn midpoint [[x y] [x' y']]
   (cond

@@ -23,7 +23,6 @@
     :selected? (= (:selected-field db) [x y])}))
 
 (rf/reg-sub
- ::game-over?
- :<- [::board]
- (fn [board _]
-   (if (db/game-over? board) "true" "false")))
+ ::status
+ (fn [db _]
+   (:status db)))

@@ -23,7 +23,7 @@
     :peg [field-peg field]))
 
 (defn board-view []
-  (let [[height width] @(rf/subscribe [::subs/board-dimensions])]
+  (let [[width height] @(rf/subscribe [::subs/board-dimensions])]
     (into
      [:div.board
       {:style {:grid-template-columns (string/join " " (repeat width "1fr"))
@@ -32,8 +32,14 @@
            x (range width)]
        [field-view @(rf/subscribe [::subs/field x y])]))))
 
+(defn menu []
+  [:div.menu
+   [:h1 "Welcome to Solitaire!"]
+   [:button {:on-click #(rf/dispatch [::events/start])} "Play"]])
+
 (defn main-panel []
   [:div
-   [:h1 "Welcome to Solitaire!"]
-   [board-view]
-   [:p "Game over: " @(rf/subscribe [::subs/game-over?])]])
+   (case @(rf/subscribe [::subs/status])
+     :not-started [menu]
+     :in-progress [board-view]
+     nil)])
