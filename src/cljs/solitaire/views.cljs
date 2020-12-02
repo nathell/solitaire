@@ -35,4 +35,5 @@
 (defn main-panel []
   [:div
    [:h1 "Welcome to Solitaire!"]
-   [board-view]])
+   [board-view]
+   [:p "Game over: " @(rf/subscribe [::subs/game-over?])]])

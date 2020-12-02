@@ -1,6 +1,7 @@
 (ns solitaire.subs
   (:require
-   [re-frame.core :as rf]))
+   [re-frame.core :as rf]
+   [solitaire.db :as db]))
 
 (rf/reg-sub
  ::board
@@ -11,7 +12,7 @@
  ::board-dimensions
  :<- [::board]
  (fn [board _]
-   [(count (first board)) (count board)]))
+   (db/dimensions board)))
 
 (rf/reg-sub
  ::field
@@ -20,3 +21,9 @@
     :y y
     :type (get-in db [:board y x])
     :selected? (= (:selected-field db) [x y])}))
+
+(rf/reg-sub
+ ::game-over?
+ :<- [::board]
+ (fn [board _]
+   (if (db/game-over? board) "true" "false")))

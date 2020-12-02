@@ -23,6 +23,13 @@
     (and (= x' (+ x 2)) (= y' y)) [(+ x 1) y]
     :otherwise                    nil))
 
+(defn dimensions [board]
+  [(count (first board)) (count board)])
+
+(defn field-seq [[width height]]
+  (for [y (range height) x (range width)]
+    [x y]))
+
 (defn field-at [board [x y]]
   (get-in board [y x]))
 
@@ -41,3 +48,16 @@
         (update-field source :empty)
         (update-field mid :empty)
         (update-field target :peg))))
+
+(defn potential-targets [[x y]]
+  [[x (- y 2)]
+   [x (+ y 2)]
+   [(- x 2) y]
+   [(+ x 2) y]])
+
+(defn can-move-anywhere? [board source]
+  (some (partial can-move? board source)
+        (potential-targets source)))
+
+(defn game-over? [board]
+  (not (some (partial can-move-anywhere? board) (field-seq (dimensions board)))))
