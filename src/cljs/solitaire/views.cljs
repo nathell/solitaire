@@ -1,11 +1,34 @@
 (ns solitaire.views
   (:require
-   [re-frame.core :as re-frame]
-   [solitaire.subs :as subs]
-   ))
+   [clojure.string :as string]
+   [re-frame.core :as rf]
+   [solitaire.subs :as subs]))
+
+(defn field-blocked []
+  [:div.field.field--blocked])
+
+(defn field-empty []
+  [:div.field])
+
+(defn field-peg []
+  [:div.field
+   [:div.peg]])
+
+(defn field-view [x]
+  (case x
+    :blocked [field-blocked]
+    :empty [field-empty]
+    :peg [field-peg]))
+
+(defn board-view [board]
+  (into
+   [:div.board
+    {:style {:grid-template-columns (string/join " " (repeat (count (first board)) "1fr"))}}]
+   (for [row     board
+         field   row]
+     [field-view field])))
 
 (defn main-panel []
-  (let [name (re-frame/subscribe [::subs/name])]
-    [:div
-     [:h1 "Hello from " @name]
-     ]))
+  [:div
+   [:h1 "Welcome to Solitaire!"]
+   [board-view @(rf/subscribe [::subs/board])]])

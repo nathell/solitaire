@@ -1,0 +1,30 @@
+* {
+    box-sizing: border-box;
+}
+
+.board {
+    display: grid;
+    grid-template-rows: auto;
+    width: 500px;
+    height: 500px;
+    background-color: #ccc;
+    grid-gap: 2px;
+}
+
+.field {
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.field--blocked {
+    background-color: #999;
+}
+
+.peg {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background: black;
+}
