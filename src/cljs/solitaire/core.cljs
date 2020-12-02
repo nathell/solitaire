@@ -5,6 +5,7 @@
    [solitaire.events :as events]
    [solitaire.views :as views]
    [solitaire.config :as config]
+   [solitaire.fx :as fx]
    ))
 
 

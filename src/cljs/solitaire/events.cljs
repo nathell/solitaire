@@ -24,17 +24,22 @@
             nil
             [x y]))))
 
-(rf/reg-event-db
+(rf/reg-event-fx
+ ::end-game
+ (fn [{db :db} _]
+   {:db (assoc db :status :game-over)
+    :alert "Game over!"}))
+
+(rf/reg-event-fx
  ::make-move
- (fn [{:keys [board] :as db} [_ x y]]
+ (fn [{{:keys [board] :as db} :db} [_ x y]]
    (let [source (:selected-field db)
          target [x y]]
      (if (db/can-move? board source target)
        (let [new-board (db/move board source target)]
-         (assoc db
-                :board new-board
-                :selected-field nil
-                :status (if (db/game-over? new-board)
-                          :game-over
-                          :in-progress)))
-       (assoc db :selected-field nil)))))
+         (merge {:db (assoc db
+                            :board new-board
+                            :selected-field nil)}
+                (when (db/game-over? new-board)
+                  {:dispatch [::end-game]})))
+       {:db (assoc db :selected-field nil)}))))
