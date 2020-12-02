@@ -35,6 +35,6 @@
                 :board new-board
                 :selected-field nil
                 :status (if (db/game-over? new-board)
-                          :not-started
+                          :game-over
                           :in-progress)))
        (assoc db :selected-field nil)))))

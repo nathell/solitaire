@@ -40,14 +40,21 @@
    [board-view]
    [pegs-count]])
 
-(defn menu []
+(defn play-button []
+  [:button {:on-click #(rf/dispatch [::events/start])} "Play"])
+
+(defn menu [status]
   [:div.menu
-   [:h1 "Welcome to Solitaire!"]
-   [:button {:on-click #(rf/dispatch [::events/start])} "Play"]])
+   (if (= status :not-started)
+     [:h1 "Welcome to Solitaire!"]
+     [:div
+      [:h1 "Game over, " @(rf/subscribe [::subs/pegs-count]) " pegs left"]])
+   [play-button]])
 
 (defn main-panel []
   [:div
    (case @(rf/subscribe [::subs/status])
-     :not-started [menu]
+     :not-started [menu :not-started]
+     :game-over [menu :game-over]
      :in-progress [game]
      nil)])
