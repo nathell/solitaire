@@ -12,4 +12,7 @@
 (rf/reg-event-db
  ::select-field
  (fn [db [_ x y]]
-   (assoc db :selected-field [x y])))
+   (assoc db :selected-field
+          (if (= (:selected-field db) [x y])
+            nil
+            [x y]))))
