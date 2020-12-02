@@ -10,25 +10,26 @@
 (defn field-empty []
   [:div.field])
 
-(defn field-peg []
+(defn field-peg [selected?]
   [:div.field
-   [:div.peg]])
+   [:div.peg {:class (when selected? "peg--selected")}]])
 
-(defn field-view [x]
-  (case x
+(defn field-view [{:keys [type selected?] :as field}]
+  (case type
     :blocked [field-blocked]
     :empty [field-empty]
-    :peg [field-peg]))
+    :peg [field-peg selected?]))
 
-(defn board-view [board]
-  (into
-   [:div.board
-    {:style {:grid-template-columns (string/join " " (repeat (count (first board)) "1fr"))}}]
-   (for [row     board
-         field   row]
-     [field-view field])))
+(defn board-view []
+  (let [[height width] @(rf/subscribe [::subs/board-dimensions])]
+    (into
+     [:div.board
+      {:style {:grid-template-columns (string/join " " (repeat width "1fr"))}}]
+     (for [y (range height)
+           x (range width)]
+       [field-view @(rf/subscribe [::subs/field x y])]))))
 
 (defn main-panel []
   [:div
    [:h1 "Welcome to Solitaire!"]
-   [board-view @(rf/subscribe [::subs/board])]])
+   [board-view]])

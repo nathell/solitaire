@@ -28,3 +28,8 @@
     border-radius: 25px;
     background: black;
 }
+
+.peg--selected {
+    background: blue;
+    box-shadow: 0px 0px 10px blue;
+}
