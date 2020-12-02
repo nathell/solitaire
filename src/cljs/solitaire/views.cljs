@@ -32,6 +32,14 @@
            x (range width)]
        [field-view @(rf/subscribe [::subs/field x y])]))))
 
+(defn pegs-count []
+  [:h1 "Pegs left: " @(rf/subscribe [::subs/pegs-count])])
+
+(defn game []
+  [:div
+   [board-view]
+   [pegs-count]])
+
 (defn menu []
   [:div.menu
    [:h1 "Welcome to Solitaire!"]
@@ -41,5 +49,5 @@
   [:div
    (case @(rf/subscribe [::subs/status])
      :not-started [menu]
-     :in-progress [board-view]
+     :in-progress [game]
      nil)])

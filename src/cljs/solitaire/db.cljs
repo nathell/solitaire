@@ -63,3 +63,6 @@
 
 (defn game-over? [board]
   (not (some (partial can-move-anywhere? board) (field-seq (dimensions board)))))
+
+(defn count-pegs [board]
+  (count (filter #{:peg} (flatten board))))

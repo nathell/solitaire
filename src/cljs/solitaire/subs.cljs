@@ -26,3 +26,9 @@
  ::status
  (fn [db _]
    (:status db)))
+
+(rf/reg-sub
+ ::pegs-count
+ :<- [::board]
+ (fn [board _]
+   (db/count-pegs board)))
