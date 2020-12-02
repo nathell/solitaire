@@ -16,5 +16,7 @@
 (rf/reg-sub
  ::field
  (fn [db [_ x y]]
-   {:type (get-in db [:board y x])
-    :selected? (and (= x 0) (= y 2))}))
+   {:x x
+    :y y
+    :type (get-in db [:board y x])
+    :selected? (= (:selected-field db) [x y])}))

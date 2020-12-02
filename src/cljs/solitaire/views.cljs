@@ -2,6 +2,7 @@
   (:require
    [clojure.string :as string]
    [re-frame.core :as rf]
+   [solitaire.events :as events]
    [solitaire.subs :as subs]))
 
 (defn field-blocked []
@@ -10,15 +11,16 @@
 (defn field-empty []
   [:div.field])
 
-(defn field-peg [selected?]
+(defn field-peg [{:keys [selected? x y]}]
   [:div.field
-   [:div.peg {:class (when selected? "peg--selected")}]])
+   [:div.peg {:class (when selected? "peg--selected")
+              :on-click #(rf/dispatch [::events/select-field x y])}]])
 
 (defn field-view [{:keys [type selected?] :as field}]
   (case type
     :blocked [field-blocked]
     :empty [field-empty]
-    :peg [field-peg selected?]))
+    :peg [field-peg field]))
 
 (defn board-view []
   (let [[height width] @(rf/subscribe [::subs/board-dimensions])]

@@ -27,6 +27,7 @@
     height: 50px;
     border-radius: 25px;
     background: black;
+    cursor: pointer;
 }
 
 .peg--selected {
