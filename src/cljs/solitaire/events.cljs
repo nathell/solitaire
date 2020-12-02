@@ -16,3 +16,14 @@
           (if (= (:selected-field db) [x y])
             nil
             [x y]))))
+
+(rf/reg-event-db
+ ::make-move
+ (fn [{:keys [board] :as db} [_ x y]]
+   (let [source (:selected-field db)
+         target [x y]]
+     (if (db/can-move? board source target)
+       (-> db
+           (assoc :board (db/move board source target))
+           (assoc :selected-field nil))
+       (assoc db :selected-field nil)))))

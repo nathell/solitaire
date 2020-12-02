@@ -8,8 +8,8 @@
 (defn field-blocked []
   [:div.field.field--blocked])
 
-(defn field-empty []
-  [:div.field])
+(defn field-empty [{:keys [x y]}]
+  [:div.field {:on-click #(rf/dispatch [::events/make-move x y])}])
 
 (defn field-peg [{:keys [selected? x y]}]
   [:div.field
@@ -19,7 +19,7 @@
 (defn field-view [{:keys [type selected?] :as field}]
   (case type
     :blocked [field-blocked]
-    :empty [field-empty]
+    :empty [field-empty field]
     :peg [field-peg field]))
 
 (defn board-view []
