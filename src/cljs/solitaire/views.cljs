@@ -1,9 +1,8 @@
 (ns solitaire.views
-  (:require
-   [clojure.string :as string]
-   [re-frame.core :as rf]
-   [solitaire.events :as events]
-   [solitaire.subs :as subs]))
+  (:require [clojure.string :as string]
+            [re-frame.core :as rf]
+            [solitaire.events :as events]
+            [solitaire.subs :as subs]))
 
 (defn field-blocked []
   [:div.field.field--blocked])

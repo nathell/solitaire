@@ -1,6 +1,7 @@
 (ns solitaire.events
   (:require
    [re-frame.core :as rf]
+   [solitaire.board :as board]
    [solitaire.db :as db]
    [day8.re-frame.tracing :refer-macros [fn-traced]]))
 
@@ -13,7 +14,7 @@
  ::start
  (fn [db _]
    (assoc db
-          :board db/initial-board
+          :board board/initial-board
           :status :in-progress)))
 
 (rf/reg-event-db
@@ -35,11 +36,11 @@
  (fn [{{:keys [board] :as db} :db} [_ x y]]
    (let [source (:selected-field db)
          target [x y]]
-     (if (db/can-move? board source target)
-       (let [new-board (db/move board source target)]
+     (if (board/can-move? board source target)
+       (let [new-board (board/move board source target)]
          (merge {:db (assoc db
                             :board new-board
                             :selected-field nil)}
-                (when (db/game-over? new-board)
+                (when (board/game-over? new-board)
                   {:dispatch [::end-game]})))
        {:db (assoc db :selected-field nil)}))))

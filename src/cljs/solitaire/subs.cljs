@@ -1,7 +1,6 @@
 (ns solitaire.subs
-  (:require
-   [re-frame.core :as rf]
-   [solitaire.db :as db]))
+  (:require [re-frame.core :as rf]
+            [solitaire.board :as board]))
 
 (rf/reg-sub
  ::board
@@ -12,7 +11,7 @@
  ::board-dimensions
  :<- [::board]
  (fn [board _]
-   (db/dimensions board)))
+   (board/dimensions board)))
 
 (rf/reg-sub
  ::field
@@ -31,4 +30,4 @@
  ::pegs-count
  :<- [::board]
  (fn [board _]
-   (db/count-pegs board)))
+   (board/count-pegs board)))
