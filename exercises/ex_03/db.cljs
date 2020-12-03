@@ -2,5 +2,4 @@
   (:require [solitaire.board :as board]))
 
 (def default-db
-  {:board board/initial-board
-   :selected-field [3 1]})
+  {:status :not-started, :board board/initial-board})

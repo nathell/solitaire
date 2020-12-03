@@ -19,4 +19,15 @@
    {:x x
     :y y
     :type (get-in db [:board y x])
-    :selected? (= [x y] (:selected-field db))}))
+    :selected? (= (:selected-field db) [x y])}))
+
+(rf/reg-sub
+ ::status
+ (fn [db _]
+   (:status db)))
+
+(rf/reg-sub
+ ::pegs-count
+ :<- [::board]
+ (fn [board _]
+   (board/count-pegs board)))
