@@ -8,6 +8,12 @@
     height: 500px;
     background-color: #ccc;
     grid-gap: 2px;
+    /* This styling assumes that the board is 7x7, for simplicity.
+       As an exercise, you may want to generalize it. Hint: remove
+       these styles from CSS and construct them dynamically in the `board-view`
+       component. */
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 .field {
