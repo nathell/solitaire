@@ -30,8 +30,15 @@ skeleton app, congratulations! You are ready for the workshop.
 Please note that there may be updates pushed to the repo after you clone it, so I’ll ask everybody to
 `git pull` just before we start, so that we’re all working with the same code.
 
-## When in doubt…
+## During the workshop
 
 If you have trouble with anything, please contact me at dj@danieljanus.pl. I’m also `djanus` on Clojurians Slack (note: there are two
 accounts by that name – both are mine but I lost access to one of them – so please message the one whose status message reads
 “Your re-frame workshop host”), or you can ping me on [Twitter](https://twitter.com/nathell).
+
+The slides can be found at [http://danieljanus.pl/talks/2020-reclojure/](http://danieljanus.pl/talks/2020-reclojure/).
+
+## After the workshop
+
+I’d be grateful if you take the time to fill a short [survey](http://tinyurl.com/re-frame-workshop-survey). It’s my first workshop,
+so I want to know what I can improve for future ones!
