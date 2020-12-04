@@ -13,10 +13,7 @@
 (rf/reg-event-db
  ::select-field
  (fn [db [_ x y]]
-   ;; Your task is to return the updated db with `:selected-field` set
-   ;; to [x y], unless it's already [x y], in which case set it to
-   ;; nil.
-   ;;
-   ;; Note that `solitaire.views/field-peg` has been updated to
-   ;; dispatch this event on click.
-   db))
+   (assoc db :selected-field
+          (if (= (:selected-field db) [x y])
+            nil
+            [x y]))))
